@@ -1,0 +1,23 @@
+[
+    {
+        "active": true,
+        "price": "1000",
+        "amount": "30",
+        "type_V": "1",
+        "order": 1
+    },
+    {
+        "active": true,
+        "price": "2000",
+        "amount": "45",
+        "type_V": "2",
+        "order": 2
+    },
+    {
+        "active": true,
+        "price": "3000",
+        "amount": "60",
+        "type_V": "3",
+        "order": 3
+    }
+]

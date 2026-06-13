@@ -1,0 +1,369 @@
+/* =========================================
+   MOBILE SPECIFIC STYLES (Vertical/Phones)
+   Este archivo separa la lógica de PC (style.css)
+   ========================================= */
+
+@media (max-width: 991px) {
+    .navbar {
+        box-shadow: none !important;
+        border-bottom: 2px solid rgba(232, 163, 79, 0.3) !important;
+    }
+
+    .navbar .container {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: space-between !important;
+    }
+
+    .navbar-brand {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .navbar-brand img {
+        width: 55px !important;
+        height: auto !important;
+        display: block !important;
+    }
+
+    #noticia.panel.noticias {
+        background-position: center -112px !important;
+    }
+
+    /* Menu Desplegable Horizontal estilo Mosaico */
+    .navbar-collapse {
+        background: rgba(13, 6, 26, 0.98) !important;
+        border: 1px solid rgba(232, 163, 79, 0.5) !important;
+        border-radius: 8px !important;
+        padding: 15px !important;
+        margin-top: 15px !important;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.9) !important;
+        backdrop-filter: blur(10px) !important;
+        z-index: 1050 !important;
+        position: relative !important;
+    }
+
+    .navbar-nav {
+        flex-direction: row !important;
+        flex-wrap: wrap !important;
+        justify-content: center !important;
+        gap: 6px !important;
+    }
+
+    .navbar-nav .nav-item {
+        width: auto !important;
+        flex: 0 0 auto !important;
+    }
+
+    .navbar-nav .nav-link {
+        background: rgba(0,0,0,0.5) !important;
+        color: rgba(255, 255, 255, 0.9) !important;
+        padding: 5px 8px !important; /* Aún más chico para que no se choque */
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 6px !important;
+        text-align: center !important;
+        font-size: 11px !important; /* Letra más chica */
+        font-weight: 500 !important;
+        letter-spacing: 0.5px !important;
+    }
+
+    .navbar-nav .nav-item:last-child .nav-link,
+    .navbar-nav.ms-auto .nav-item:last-child .nav-link {
+        border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+    }
+    
+    .navbar-nav.ms-auto {
+        margin-top: 12px !important;
+        border-top: 1px solid rgba(232, 163, 79, 0.2) !important;
+        padding-top: 15px !important;
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    /* Subir Título "CLASES" y Aprovechar Espacio Superior */
+    #class-showcase .panel-content {
+        height: auto !important;
+        min-height: 100vh !important;
+        padding: 10px 0 90px !important; 
+        justify-content: flex-start !important; 
+    }
+    #class-showcase h2.section-premium-title {
+        margin-top: 10px !important;
+        margin-bottom: 0 !important;
+    }
+    .class-main-container {
+        flex-direction: column !important;
+        gap: 0px !important; /* Zero gap */
+    }
+    .class-character {
+        margin-top: -30px !important; /* Levantar violentamente al personaje */
+    }
+    .class-character img {
+        height: 48vh !important;
+        max-height: 380px !important;
+    }
+    .class-info-box {
+        align-items: center !important;
+        text-align: center !important;
+        margin-top: 0 !important;
+        margin-left: 0 !important; 
+    }
+    .class-top-selector {
+        transform: translateY(0) !important; 
+        margin-bottom: 10px !important;
+        flex-wrap: wrap !important;
+    }
+    .chart-container-compact {
+        width: min(380px, 92vw) !important;
+        margin-left: 0 !important;
+        margin-top: 0 !important; 
+    }
+    .class-dots-container {
+        position: relative !important;
+        transform: none !important;
+        left: 0 !important;
+        margin-top: 20px !important;
+        bottom: auto !important;
+    }
+
+    /* Evitar bordes laterales de otras cards en Rankings mobile */
+    .rankingsSwiper, .newsSwiper {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    /* Comprimir la tabla de rankings de inicio para que no desborde y arruine el Swiper */
+    .rankingsSwiper .rankings-table th,
+    .rankingsSwiper .rankings-table td {
+        font-size: 10px !important;
+        padding: 5px 2px !important;
+        white-space: normal !important; /* Texto puede bajar de renglón si no cabe */
+    }
+
+    /* Tablas responsivas en subpáginas para móviles */
+    .rankings-table, table.table {
+        display: block !important;
+        width: 100% !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        white-space: nowrap !important;
+    }
+    
+    /* Pequeño arreglo extra para encabezados de tabla de rankings en scroll */
+    .rankings-table th, table.table th, .rankings-table td, table.table td {
+        white-space: nowrap !important;
+    }
+}
+
+@media (max-width: 768px) {
+    #inicio .fade-in-down {
+        margin-top: 56px !important;
+    }
+
+    #inicio .text-main-section {
+        margin-top: 26px !important;
+        margin-bottom: 0 !important;
+        width: min(92vw, 560px);
+        text-align: center !important;
+    }
+
+    #inicio .h2-main-section {
+        bottom: 212px !important;
+        width: 34px !important;
+        height: 56px !important;
+        border: 2px solid rgba(255, 255, 255, 0.66) !important;
+        border-radius: 12px !important;
+        background: transparent !important;
+        animation: none !important;
+    }
+
+    #inicio .h2-main-section::before {
+        content: "" !important;
+        width: 7px !important;
+        height: 7px !important;
+        top: 34px !important;
+        left: 50% !important;
+        transform: translateX(-50%);
+        background: rgba(255, 255, 255, 0.92) !important;
+        border: 0 !important;
+        border-radius: 50% !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.8) !important;
+        animation: swipe-phone 1.4s ease-in-out infinite !important;
+    }
+
+    #inicio .h2-main-section::after {
+        display: block !important;
+        content: "" !important;
+        bottom: -13px !important;
+        left: 50% !important;
+        transform: translateX(-50%) rotate(45deg) !important;
+        width: 10px !important;
+        height: 10px !important;
+        border-right: 2px solid rgba(255, 255, 255, 0.7) !important;
+        border-bottom: 2px solid rgba(255, 255, 255, 0.7) !important;
+        animation: arrow-bounce 1.8s ease-in-out infinite !important;
+    }
+
+    /* Limpiar logo central: separar Discord y Server Info */
+	.server-info-glass {
+		top: 54px !important;
+		right: 5px !important;
+		width: 200px !important;
+		font-size: 11px !important;
+		padding: 12px 14px !important;
+        transform: scale(0.82) !important;
+        transform-origin: top right !important;
+	}
+	.discord-hero-widget {
+		top: 54px !important;
+		left: 5px !important;
+		width: auto !important;
+        transform: scale(0.82) !important;
+        transform-origin: top left !important;
+	}
+	.discord-hero-avatars .discord-hero-avatar {
+		width: 20px !important;
+		height: 20px !important;
+	}
+
+    #ranking .section-premium-title {
+        margin-top: -16px !important;
+        margin-bottom: 16px !important;
+    }
+
+    #ranking .rankingsSwiper {
+        overflow: hidden !important;
+    }
+
+    #ranking .rankings-card .page-title {
+        margin-top: 0 !important;
+        margin-bottom: 36px !important;
+        font-size: 2rem !important;
+    }
+
+    #ranking .rankings-card {
+        padding: 22px 16px 18px !important;
+        background-position: center top !important;
+        width: calc(100% - 104px) !important;
+        max-width: 620px !important;
+        margin: 0 auto !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table thead th {
+        font-size: 15px !important;
+        letter-spacing: 0.6px !important;
+        padding-bottom: 10px !important;
+        text-align: center !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table tbody td {
+        font-size: 15px !important;
+        padding: 12px 8px !important;
+        text-align: center !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table th:nth-child(1),
+    #ranking .rankingsSwiper .rankings-table td:nth-child(1),
+    #ranking .rankingsSwiper .rankings-table th:nth-child(3),
+    #ranking .rankingsSwiper .rankings-table td:nth-child(3) {
+        font-size: 16px !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table {
+        width: calc(100% - 10px) !important;
+        margin: 8px auto 0 !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table th:nth-child(2),
+    #ranking .rankingsSwiper .rankings-table td:nth-child(2) {
+        text-align: left !important;
+        padding-left: 14px !important;
+    }
+
+    #ranking .rankingsSwiper .rankings-table th:nth-child(1),
+    #ranking .rankingsSwiper .rankings-table td:nth-child(1) {
+        width: 44px !important;
+        text-align: center !important;
+    }
+
+    #ranking .rankings-card td.text-center.text-white-50 {
+        font-size: 32px !important;
+        font-weight: 700 !important;
+        line-height: 1.2 !important;
+        padding-top: 70px !important;
+    }
+
+    #noticia .newsSwiper {
+        width: calc(100% - 104px) !important;
+        max-width: 620px !important;
+        margin: 0 auto !important;
+    }
+
+    #noticia .newsSwiper .swiper-slide {
+        padding: 0 !important;
+    }
+
+    #noticia .newsSwiper .swiper-button-next,
+    #noticia .newsSwiper .swiper-button-prev {
+        display: none !important;
+    }
+
+    #ranking .rankingsSwiper .swiper-pagination {
+        bottom: 10px !important;
+    }
+
+    #class-showcase h2.section-premium-title {
+        margin-top: -48px !important;
+        margin-bottom: 28px !important;
+    }
+
+    #class-showcase h2.section-premium-title::after {
+        bottom: -9px !important;
+    }
+
+    #class-showcase .class-character {
+        margin-top: -68px !important;
+    }
+
+    #class-showcase .class-character img {
+        height: 46vh !important;
+        max-height: 350px !important;
+    }
+
+    #class-showcase .class-info-box {
+        margin-top: -86px !important;
+    }
+
+    #class-showcase .class-info-box #class-title {
+        margin-top: -8px !important;
+        margin-bottom: 0 !important;
+    }
+
+    #class-showcase .class-info-box #class-description {
+        margin-top: -2px !important;
+        margin-bottom: 0 !important;
+        max-width: min(72vw, 290px) !important;
+        line-height: 1.35 !important;
+    }
+
+    #class-showcase .chart-container-compact {
+        margin-top: -48px !important;
+        width: min(360px, 90vw) !important;
+    }
+    
+    /* El celular no vera los iconos sociales y quedará más limpio */
+    .rrss-icon, .rrss-icon-premium {
+        display: none !important;
+    }
+
+    @keyframes swipe-phone {
+        0%, 100% {
+            transform: translateX(-50%) translateY(0);
+            opacity: 0.9;
+        }
+        50% {
+            transform: translateX(-50%) translateY(-16px);
+            opacity: 0.45;
+        }
+    }
+}
