@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin>
+	<name>Stripe Donations</name>
+	<author>Custom</author>
+	<version>1.0.0</version>
+	<compatibility>
+		<webengine>1.2.7</webengine>
+	</compatibility>
+	<folder>stripe</folder>
+	<files>
+		<file>loader.php</file>
+	</files>
+</plugin>

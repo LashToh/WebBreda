@@ -18,22 +18,27 @@ templates/Mu Vicious/        -> Template del sitio (adaptado a 1.2.7, navbar
 
 modules/                      -> Módulos personalizados (overrides):
     info.php                     - página de información del servidor
-    donation.php                 - selector de métodos de pago (PayPal / MercadoPago)
+    donation.php                 - selector de métodos de pago (PayPal / MercadoPago / Stripe)
     donation/mercadopago.php     - paquetes de Coins/VIP vía Mercado Pago
+    donation/stripe.php          - paquetes de Coins/VIP vía Stripe
+    donation/stripe_checkout.php - crea la Checkout Session de Stripe (on-demand)
     login.php, register.php, downloads.php
 
 includes/plugins/mercadopago/ -> Plugin de Mercado Pago (Checkout Pro +
                                   Webhook), ver su propio README para la
                                   instalación.
 
-admincp/modules/               -> Paneles de administración del plugin
+includes/plugins/stripe/      -> Plugin de Stripe (Checkout + Webhook), ver
+                                  su propio README para la instalación.
+
+admincp/modules/               -> Paneles de administración de ambos plugins
                                   (configuración y gestión de paquetes).
 
 includes/config/                -> Configuraciones (paquetes de Coins/VIP,
-                                  settings de Mercado Pago).
+                                  settings de Mercado Pago y Stripe).
 
-sql/                            -> Script SQL para la tabla de transacciones
-                                  de Mercado Pago.
+sql/                            -> Scripts SQL para las tablas de
+                                  transacciones de cada plugin.
 ```
 
 ## Instalación / Deploy
@@ -44,6 +49,8 @@ sql/                            -> Script SQL para la tabla de transacciones
 2. Activá el template **"Mu Vicious"** desde AdminCP -> Website Settings.
 3. Para el plugin de Mercado Pago, seguí las instrucciones en
    [`includes/plugins/mercadopago/README.md`](includes/plugins/mercadopago/README.md).
+4. Para el plugin de Stripe, seguí las instrucciones en
+   [`includes/plugins/stripe/README.md`](includes/plugins/stripe/README.md).
 
 ## Notas
 

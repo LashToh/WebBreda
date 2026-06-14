@@ -24,6 +24,13 @@ try {
                             style="pointer-events: none; width: 100%; font-size: 16px; padding: 15px;">Donar con
                             Mercado Pago</span></div>
                 </a></div>
+            <div class="col-lg-4 col-md-6"><a href="'.__BASE_URL__.'donation/stripe/"
+                    class="text-decoration-none h-100 d-block">
+                    <div class="card-donations p-5"><img src="'.__PATH_TEMPLATE_IMG__.'stripelogo.svg"
+                            alt="Stripe" class="img-fluid mb-4" style="max-width:200px;"><span class="btn-premium-gold"
+                            style="pointer-events: none; width: 100%; font-size: 16px; padding: 15px;">Donar con
+                            Stripe</span></div>
+                </a></div>
         </div>
     </div>
 </div>';

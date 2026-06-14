@@ -30,8 +30,8 @@ includes/config/
     modules/mercadopago.xml -> configuración del módulo (token, urls, etc)
 
 sql/
-    mysql_install.sql   -> tabla de transacciones (MySQL)
-    mssql_install.sql   -> tabla de transacciones (MSSQL)
+    mercadopago_mysql_install.sql -> tabla de transacciones (MySQL)
+    mercadopago_mssql_install.sql -> tabla de transacciones (MSSQL)
 ```
 
 ---
@@ -39,7 +39,7 @@ sql/
 ## Instalación
 
 ### 1. Base de datos
-Ejecutá `sql/mysql_install.sql` (o `mssql_install.sql` según tu motor) sobre la
+Ejecutá `sql/mercadopago_mysql_install.sql` (o `mercadopago_mssql_install.sql` según tu motor) sobre la
 base **Me_MuOnline** (la base de WebEngine). Si tu instalación usa un prefijo
 de tablas (`WE_PREFIX`), reemplazá `{TABLE_PREFIX}` por ese prefijo (en la
 mayoría de las instalaciones está vacío).

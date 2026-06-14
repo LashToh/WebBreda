@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings>
+	<active>1</active>
+	<coins_status>1</coins_status>
+	<vip_status>1</vip_status>
+	<item_description>Donations</item_description>
+	<secret_key>sk_test_YOUR-SECRET-KEY-HERE</secret_key>
+	<publishable_key>pk_test_YOUR-PUBLISHABLE-KEY-HERE</publishable_key>
+	<webhook_secret>whsec_YOUR-WEBHOOK-SECRET-HERE</webhook_secret>
+	<currency>usd</currency>
+	<success_url>https://yourdomain.com/usercp/myaccount</success_url>
+	<cancel_url>https://yourdomain.com/donation/stripe</cancel_url>
+</settings>
