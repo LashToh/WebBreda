@@ -33,23 +33,29 @@ base ya existe y arranca directo.
 
 ### Hot reload
 
-`./src` se monta dentro del contenedor con symlinks, así que **editar un archivo
-existente se ve al instante**. Si **agregás o borrás** archivos en `./src`,
-corré `just sync` (o reiniciá `just dev`) para regenerar los enlaces.
+`./src` se monta dentro del contenedor y se enlaza sobre el core de WebEngine,
+así que **editar un archivo existente se ve al instante**. Cuando **agregás o
+borrás** archivos en `./src`, el contenedor lo detecta y vuelve a enlazar
+**automáticamente** (no hace falta reiniciar). `just sync` queda como fallback
+manual por si querés forzar el re-enlace.
 
 ## Comandos (`just`)
+
+Corré `just` (sin argumentos) para ver el listado agrupado. Resumen:
 
 | Comando            | Qué hace                                                            |
 | ------------------ | ------------------------------------------------------------------- |
 | `just dev`         | Construye, inicializa la base (si hace falta) y levanta db + web.   |
 | `just init`        | Restaura el backup e instala las tablas de WebEngine (idempotente). |
+| `just info`        | Muestra URLs, conexión a la base y la URL pública de ngrok.         |
 | `just ngrok`       | Abre un túnel ngrok al contenedor web (para probar webhooks).       |
-| `just sync`        | Re-enlaza `./src` en el contenedor (tras agregar/borrar archivos).  |
+| `just sync`        | Fuerza el re-enlace de `./src` (normalmente es automático).         |
 | `just build-full`  | ZIP completo de `./src` (incluye imágenes/video) para deploy FTP.   |
 | `just build-patch` | ZIP liviano (solo código/config, sin imágenes ni video).            |
 | `just db`          | Abre una consola SQL contra la base.                                |
 | `just logs`        | Sigue los logs de los contenedores.                                 |
-| `just down`        | Detiene los contenedores (conserva los datos).                      |
+| `just stop`        | Detiene los contenedores sin borrarlos (resume con `just dev`).     |
+| `just down`        | Elimina los contenedores y la red (los datos quedan en volúmenes).  |
 | `just reset`       | Detiene y **borra** los volúmenes (base + webroot).                 |
 
 ## Probar pagos (ngrok)
@@ -110,3 +116,8 @@ docker-compose.yml, justfile      -> Orquestación local
 - Para ver errores PHP durante el desarrollo, poné `"error_reporting": true` en
   `includes/config/webengine.json` (se regenera desde `docker/web/webengine.json.tpl`).
 - El sidebar de "Eventos" del home consume `api/events.php` (parte del core).
+- Los contenedores **no** arrancan solos al reiniciar la PC (`restart: "no"`):
+  se levantan únicamente con `just dev`.
+- Cada contenedor tiene **límites de CPU/RAM** (ver bloque "Container resource
+  limits" en `.env`) para que Docker no se coma toda la máquina. Ajustalos según
+  tu hardware. SQL Server necesita un contenedor de **≥ 2 GB**.

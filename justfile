@@ -7,7 +7,11 @@ set dotenv-load := true
 _default:
     @just --list
 
+
+# ─────────────────────────────── Dev ───────────────────────────────
+
 # Build, init db (first run), start db + web (+ ngrok if NGROK_AUTHTOKEN set), then show info
+[group('dev')]
 dev: _envcheck
     docker compose build
     ./scripts/db-init.sh
@@ -15,7 +19,14 @@ dev: _envcheck
     @if [ -n "${NGROK_AUTHTOKEN:-}" ]; then echo "Starting ngrok tunnel..."; docker compose --profile ngrok up -d ngrok; fi
     @just info
 
+# Restore db/muonline.bak and install WebEngine tables (idempotent)
+[group('dev')]
+init: _envcheck
+    docker compose build web
+    ./scripts/db-init.sh
+
 # Show local environment info (URLs, database connection, ngrok public URL, etc.)
+[group('dev')]
 info:
     #!/usr/bin/env bash
     echo ""
@@ -49,31 +60,33 @@ info:
     else
         echo "  ngrok    : just ngrok   (set NGROK_AUTHTOKEN in .env to enable)"
     fi
-    echo "  Logs     : just logs     Stop: just down"
+    echo "  Logs     : just logs     Stop: just stop"
     echo ""
 
-# Restore db/muonline.bak and install WebEngine tables (idempotent)
-init: _envcheck
-    docker compose build web
-    ./scripts/db-init.sh
+# Force a re-link of ./src (rarely needed — the web container auto-syncs on file add/remove)
+[group('dev')]
+sync:
+    docker compose exec web /usr/local/bin/overlay.sh
 
 # Start an ngrok tunnel to the web container (for payment webhook testing), then show the URL
+[group('dev')]
 ngrok: _envcheck
     @test -n "${NGROK_AUTHTOKEN:-}" || (echo "Set NGROK_AUTHTOKEN in .env first (https://dashboard.ngrok.com)." && exit 1)
     docker compose --profile ngrok up -d ngrok
     @just info
 
-# Re-link ./src into the running web container (after ADDING or REMOVING files)
-sync:
-    docker compose exec web /usr/local/bin/overlay.sh
+
+# ────────────────────────────── Build ──────────────────────────────
 
 # Image/video assets excluded from the patch build (already present on the server)
 media_excludes := "-x '*.png' -x '*.jpg' -x '*.jpeg' -x '*.gif' -x '*.bmp' -x '*.webp' -x '*.ico' -x '*.svg' -x '*.webm' -x '*.mp4'"
 
 # Full deploy ZIP — all of ./src, including image/video assets
+[group('build')]
 build-full: (_zip "webbreda-overlay-full.zip" "")
 
 # Lighter deploy ZIP — code/config only, skips media already uploaded to the server
+[group('build')]
 build-patch: (_zip "webbreda-overlay-patch.zip" media_excludes)
 
 # Zip ./src into ./dist/{{name}} inside the web image (no host tooling needed beyond docker/just)
@@ -83,21 +96,37 @@ _zip name excludes:
         -c "cd /src && rm -f '/dist/{{name}}' && zip -rq '/dist/{{name}}' . -x './.git*' {{excludes}}"
     @echo "Created dist/{{name}}"
 
+
+# ───────────────────────────── Database ────────────────────────────
+
 # Open a SQL shell on the database
+[group('database')]
 db:
     docker compose exec db /opt/mssql-tools18/bin/sqlcmd -S localhost -U "${DB_USER}" -P "${DB_PASS}" -C -d "${DB_NAME}"
 
+
+# ──────────────────────────── Containers ───────────────────────────
+
 # Tail logs
+[group('containers')]
 logs:
     docker compose logs -f
 
-# Stop all containers
+# Stop containers without removing them (quick resume with `just dev`)
+[group('containers')]
+stop:
+    docker compose --profile ngrok stop
+
+# Remove containers and network (data is kept in volumes)
+[group('containers')]
 down:
     docker compose --profile ngrok down
 
 # Stop and DELETE all data (database + webroot volumes)
+[group('containers')]
 reset:
     docker compose --profile ngrok down -v
+
 
 # Fail early if .env is missing
 _envcheck:

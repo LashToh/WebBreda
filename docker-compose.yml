@@ -3,15 +3,24 @@ name: webbreda
 services:
   db:
     image: mcr.microsoft.com/mssql/server:2022-latest
+    # Never auto-start on boot / Docker restart — only when the user runs `just dev`.
+    restart: "no"
     environment:
       ACCEPT_EULA: "Y"
       MSSQL_SA_PASSWORD: ${DB_PASS}
       MSSQL_PID: Developer
+      # Cap SQL Server's own memory use (stay under the container limit below).
+      MSSQL_MEMORY_LIMIT_MB: ${DB_MSSQL_MEMORY_MB:-2048}
     ports:
       - "${DB_PORT_HOST:-1433}:1433"
     volumes:
       - mssql-data:/var/opt/mssql
       - ./db:/db
+    deploy:
+      resources:
+        limits:
+          cpus: "${DB_CPUS:-2}"
+          memory: ${DB_MEMORY:-3g}
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -C -Q 'SELECT 1' || exit 1"]
       interval: 10s
@@ -24,6 +33,7 @@ services:
       context: ./docker/web
       args:
         WEBENGINE_VERSION: ${WEBENGINE_VERSION:-1.2.7}
+    restart: "no"
     depends_on:
       db:
         condition: service_healthy
@@ -44,10 +54,16 @@ services:
     volumes:
       - webroot:/var/www/html
       - ./src:/src
+    deploy:
+      resources:
+        limits:
+          cpus: "${WEB_CPUS:-1.5}"
+          memory: ${WEB_MEMORY:-768m}
 
   # Tunnel for testing payment webhooks. Started on demand via `just ngrok`.
   ngrok:
     image: ngrok/ngrok:latest
+    restart: "no"
     profiles: ["ngrok"]
     depends_on:
       - web
@@ -56,6 +72,11 @@ services:
     command: ["http", "web:80"]
     ports:
       - "${NGROK_WEB_PORT:-4040}:4040"
+    deploy:
+      resources:
+        limits:
+          cpus: "${NGROK_CPUS:-0.5}"
+          memory: ${NGROK_MEMORY:-128m}
 
 volumes:
   mssql-data:

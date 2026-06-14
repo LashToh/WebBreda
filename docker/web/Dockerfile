@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         freetds-dev freetds-common \
         libpng-dev libjpeg-dev libfreetype6-dev \
         libcurl4-openssl-dev libssl-dev libonig-dev \
-        unzip zip curl gettext-base ca-certificates \
+        unzip zip curl gettext-base ca-certificates inotify-tools \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j"$(nproc)" pdo_dblib gd curl mbstring \
     && a2enmod rewrite headers \
