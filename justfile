@@ -7,14 +7,15 @@ set dotenv-load := true
 _default:
     @just --list
 
-# Build images, initialise the database (first run), then start db + web with hot reload
+# Build, init db (first run), start db + web (+ ngrok if NGROK_AUTHTOKEN set), then show info
 dev: _envcheck
     docker compose build
     ./scripts/db-init.sh
     docker compose up -d
+    @if [ -n "${NGROK_AUTHTOKEN:-}" ]; then echo "Starting ngrok tunnel..."; docker compose --profile ngrok up -d ngrok; fi
     @just info
 
-# Show local environment info (URLs, database connection, etc.)
+# Show local environment info (URLs, database connection, ngrok public URL, etc.)
 info:
     #!/usr/bin/env bash
     echo ""
@@ -31,7 +32,23 @@ info:
     echo "    User   : ${DB_USER:-sa}"
     echo "    Pass   : ${DB_PASS:-}"
     echo ""
-    echo "  ngrok    : just ngrok   (dashboard: http://localhost:${NGROK_WEB_PORT:-4040})"
+    if docker compose ps --status running --services 2>/dev/null | grep -qx ngrok; then
+        url=""
+        for _ in 1 2 3 4 5 6 7 8; do
+            url=$(curl -s "http://localhost:${NGROK_WEB_PORT:-4040}/api/tunnels" 2>/dev/null \
+                  | grep -oE '"public_url":"https://[^"]+"' | head -1 | sed 's/.*"public_url":"//; s/"$//')
+            [ -n "$url" ] && break
+            sleep 1
+        done
+        if [ -n "$url" ]; then
+            echo "  ngrok    : $url"
+            echo "             dashboard: http://localhost:${NGROK_WEB_PORT:-4040}"
+        else
+            echo "  ngrok    : starting… check dashboard http://localhost:${NGROK_WEB_PORT:-4040}"
+        fi
+    else
+        echo "  ngrok    : just ngrok   (set NGROK_AUTHTOKEN in .env to enable)"
+    fi
     echo "  Logs     : just logs     Stop: just down"
     echo ""
 
@@ -40,10 +57,11 @@ init: _envcheck
     docker compose build web
     ./scripts/db-init.sh
 
-# Start an ngrok tunnel to the web container (for payment webhook testing)
+# Start an ngrok tunnel to the web container (for payment webhook testing), then show the URL
 ngrok: _envcheck
     @test -n "${NGROK_AUTHTOKEN:-}" || (echo "Set NGROK_AUTHTOKEN in .env first (https://dashboard.ngrok.com)." && exit 1)
-    docker compose --profile ngrok up ngrok
+    docker compose --profile ngrok up -d ngrok
+    @just info
 
 # Re-link ./src into the running web container (after ADDING or REMOVING files)
 sync:

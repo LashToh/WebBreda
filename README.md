@@ -58,7 +58,10 @@ Los webhooks de Mercado Pago y Stripe necesitan una URL pública:
 
 1. Cargá tu `NGROK_AUTHTOKEN` en `.env` (lo sacás de
    <https://dashboard.ngrok.com>).
-2. `just ngrok` — la URL pública aparece en <http://localhost:4040>.
+2. Con el token cargado, `just dev` **levanta el túnel automáticamente** y
+   muestra la URL pública al final (también la ves con `just info` o, si querés
+   arrancarlo aparte, con `just ngrok`). El panel queda en
+   <http://localhost:4040>.
 3. Configurá esa URL como webhook en el panel del proveedor y en el AdminCP del
    plugin correspondiente.
 
