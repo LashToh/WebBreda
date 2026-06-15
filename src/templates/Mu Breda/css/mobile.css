@@ -3,7 +3,8 @@
    Este archivo separa la lógica de PC (style.css)
    ========================================= */
 
-@media (max-width: 991px) {
+/* Navbar collapsed menu — matches the navbar-expand-xl breakpoint (< 1200px) */
+@media (max-width: 1199.98px) {
     .navbar {
         box-shadow: none !important;
         border-bottom: 2px solid rgba(232, 163, 79, 0.3) !important;
@@ -24,10 +25,6 @@
         width: 55px !important;
         height: auto !important;
         display: block !important;
-    }
-
-    #noticia.panel.noticias {
-        background-position: center -112px !important;
     }
 
     /* Menu Desplegable Horizontal estilo Mosaico */
@@ -78,6 +75,12 @@
         padding-top: 15px !important;
         width: 100% !important;
         justify-content: center !important;
+    }
+}
+
+@media (max-width: 991px) {
+    #noticia.panel.noticias {
+        background-position: center -112px !important;
     }
 
     /* Subir Título "CLASES" y Aprovechar Espacio Superior */

@@ -27,13 +27,19 @@ if [ ! -s "$CONFIG" ]; then
     envsubst < /opt/webengine/webengine.json.tpl > "$CONFIG"
 fi
 
-# 4. Writable runtime paths.
+# 4. Writable runtime paths. WebEngine resolves the entries in
+#    includes/config/writable.paths.json relative to includes/, so the real
+#    cache and logs live under includes/cache and includes/logs (NOT the webroot
+#    root). Apache runs as www-data, so these must be owned by www-data.
 mkdir -p \
-    "$WEBROOT/cache/news/translations" \
-    "$WEBROOT/cache/profiles/guilds" \
-    "$WEBROOT/cache/profiles/players" \
-    "$WEBROOT/logs"
-chown -R www-data:www-data "$WEBROOT/cache" "$WEBROOT/logs" "$WEBROOT/includes/config" 2>/dev/null || true
+    "$WEBROOT/includes/cache/news/translations" \
+    "$WEBROOT/includes/cache/profiles/guilds" \
+    "$WEBROOT/includes/cache/profiles/players" \
+    "$WEBROOT/includes/logs"
+chown -R www-data:www-data "$WEBROOT/includes/cache" "$WEBROOT/includes/logs"
+# Config files WebEngine rewrites at runtime (webengine.json, module XMLs, …).
+# Skip overlay symlinks with -not -type l so we don't chown host files via /src.
+find "$WEBROOT/includes/config" -not -type l -exec chown www-data:www-data {} + 2>/dev/null || true
 
 # 5. Auto-sync: re-link whenever files are added/removed under /src. Editing
 #    existing files is already live (the symlinks point at the host files), so

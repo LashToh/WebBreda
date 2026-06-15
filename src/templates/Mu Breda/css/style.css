@@ -1812,7 +1812,7 @@ footer.footer-visible {
   }
 }
 
-@media (max-width: 991px) {
+@media (max-width: 1199.98px) {
   .navbar,
   footer {
     position: initial !important;

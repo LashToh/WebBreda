@@ -70,7 +70,7 @@ $isUsercpPage = ($currentPage == 'usercp');
 
 
 
-        <nav class="fixed-top navbar navbar-expand-lg">
+        <nav class="fixed-top navbar navbar-expand-xl">
             <div class="container">
                 <a href="" class="navbar-brand">
                     <img src="<?php echo __PATH_TEMPLATE_IMG__; ?>logomini.png" alt="Logo" width="55px">
